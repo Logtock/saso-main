@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://olkywss0n2bg"]
+
+[ext_resource type="Script" path="res://Scripts/weapon.gd" id="1_2ptec"]
+
+[resource]
+script = ExtResource("1_2ptec")
+damage = 10.0
+name = &"AK 47"
+rpm = 10
+capacity = 12
+maxdistance = 1000.0
+damagearea = 10.0
