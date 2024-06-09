@@ -7,9 +7,15 @@ var _velocity: Vector2 = Vector2.ZERO
 const max_speed: float = 6
 const acceleration: float = 500
 
+var player_health : int = 1000
+
 func _process(delta):
 	
 	_update_direction_axis_by_input(delta)
+	
+	if player_health <= 0 :
+		
+		queue_free()
 
 
 func _update_direction_axis_by_input(delta: float) -> void:
@@ -53,6 +59,7 @@ func _input(event: InputEvent):
 		
 
 
+
 @onready var camera_2d: Camera2D = $Camera2D
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -60,5 +67,8 @@ func _input(event: InputEvent):
 @export var weapon: Weapon
 
 func shoot():
-	
+	pass
  
+func damage(_damage:int):
+	
+	player_health -= _damage

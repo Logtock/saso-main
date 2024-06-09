@@ -1,17 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwb6ldfx50umr"]
+[gd_scene load_steps=6 format=3 uid="uid://cwb6ldfx50umr"]
 
-[ext_resource type="Script" path="res://Scenes/zombie.gd" id="1_r5j1h"]
+[ext_resource type="Script" path="res://Scripts/zombie.gd" id="1_r5j1h"]
+[ext_resource type="Resource" uid="uid://0oc6qn07eed6" path="res://Resources/Zombie/Common.tres" id="2_lfn82"]
 [ext_resource type="SpriteFrames" uid="uid://di3y0h3d36vus" path="res://Resources/Zombie/zombieframes.tres" id="2_opofx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uyoii"]
-radius = 107.019
+radius = 71.4857
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7b8m8"]
+radius = 73.409
 
 [node name="Zombie" type="CharacterBody2D"]
+scale = Vector2(0.3, 0.3)
 script = ExtResource("1_r5j1h")
+stats = ExtResource("2_lfn82")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-7, 7.25)
+scale = Vector2(0.951389, 0.953376)
 sprite_frames = ExtResource("2_opofx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-10, 18)
+position = Vector2(-25.7143, 25.7143)
 shape = SubResource("CircleShape2D_uyoii")
+
+[node name="AreaZombie" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaZombie"]
+position = Vector2(-26.6667, 26.6667)
+shape = SubResource("CircleShape2D_7b8m8")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="AreaZombie" to="." method="_on_area_2d_area_entered"]
