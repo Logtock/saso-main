@@ -1,11 +1,14 @@
 extends Area2D
+class_name Bullet
 
-var _damage:float
+var speed : float = 1
+var damage : int = 1
 
-func _init(damage:float=0):	
-	_damage=damage
+func _physics_process(delta: float) -> void:
 	
+	position += transform.x * speed * delta
 
-
-func _on_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
+func _on_body_entered(body: Node2D) -> void:
+	
+	if not body is Zombie:
+		queue_free()

@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://d0bdu5fu1gubq"]
 
-[ext_resource type="Script" path="res://Scripts/weapon.gd" id="1_fsa4n"]
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/weapon.gd" id="1_fsa4n"]
 
 [resource]
 script = ExtResource("1_fsa4n")
 damage = 10.0
 name = &"Glock20"
-rpm = 10
+rpm = 0.1
 capacity = 12
-maxdistance = 1000.0
-damagearea = 10.0
+max_distance = 1000.0
+damage_area = 10.0
+velocity = 1000

@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="Weapon" load_steps=2 format=3 uid="uid://b0mnqtuenonwq"]
 
-[ext_resource type="Script" path="res://Scripts/weapon.gd" id="1_v13a7"]
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/weapon.gd" id="1_v13a7"]
 
 [resource]
 script = ExtResource("1_v13a7")
 damage = 10.0
-name = &"AK 47"
-rpm = 10
+name = &"MP5"
+rpm = 0.09
 capacity = 12
-maxdistance = 1000.0
-damagearea = 10.0
+max_distance = 1000.0
+damage_area = 10.0
+velocity = 10

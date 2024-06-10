@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwb6ldfx50umr"]
+[gd_scene load_steps=7 format=3 uid="uid://cwb6ldfx50umr"]
 
 [ext_resource type="Script" path="res://Scripts/zombie.gd" id="1_r5j1h"]
 [ext_resource type="Resource" uid="uid://0oc6qn07eed6" path="res://Resources/Zombie/Common.tres" id="2_lfn82"]
@@ -8,9 +8,14 @@
 radius = 71.4857
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7b8m8"]
-radius = 73.409
+radius = 76.7391
 
-[node name="Zombie" type="CharacterBody2D"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7jp0a"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Zombie" type="CharacterBody2D" groups=["Enemy"]]
 scale = Vector2(0.3, 0.3)
 script = ExtResource("1_r5j1h")
 stats = ExtResource("2_lfn82")
@@ -20,16 +25,21 @@ position = Vector2(-7, 7.25)
 scale = Vector2(0.951389, 0.953376)
 sprite_frames = ExtResource("2_opofx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2(-25.7143, 25.7143)
 shape = SubResource("CircleShape2D_uyoii")
 
 [node name="AreaZombie" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaZombie"]
-position = Vector2(-26.6667, 26.6667)
+[node name="Hitbox" type="CollisionShape2D" parent="AreaZombie"]
+position = Vector2(-23.3333, 26.6667)
 shape = SubResource("CircleShape2D_7b8m8")
 
 [node name="Timer" type="Timer" parent="."]
 
-[connection signal="area_entered" from="AreaZombie" to="." method="_on_area_2d_area_entered"]
+[node name="Nav" type="NavigationAgent2D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_7jp0a")
+
+[connection signal="area_entered" from="AreaZombie" to="." method="_on_area_zombie_area_entered"]

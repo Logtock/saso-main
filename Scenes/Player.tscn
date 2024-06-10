@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://vt5vrcqg3pgm"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_hkkoc"]
+[ext_resource type="Resource" uid="uid://d0bdu5fu1gubq" path="res://Resources/Guns/Glock20.tres" id="2_edhlj"]
+[ext_resource type="SpriteFrames" uid="uid://cmk5hp37nj8bu" path="res://Assets/Idleanmation/Idleplayer.tres" id="3_jw84b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d08rb"]
+radius = 24.0832
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_immqx"]
+radius = 24.0208
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vxrdw"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Player" type="CharacterBody2D" groups=["Players"]]
+z_index = 1
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_hkkoc")
+weapon = ExtResource("2_edhlj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+sprite_frames = ExtResource("3_jw84b")
+animation = &"Idle"
+
+[node name="Colitionbox" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4)
+shape = SubResource("CircleShape2D_d08rb")
+
+[node name="AreaPlayer" type="Area2D" parent="."]
+
+[node name="Hitbox" type="CollisionShape2D" parent="AreaPlayer"]
+position = Vector2(1, 4)
+shape = SubResource("CircleShape2D_immqx")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(34, 16)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vxrdw")
+
+[connection signal="area_entered" from="AreaPlayer" to="." method="_on_area_2d_area_entered"]

@@ -1,29 +1,39 @@
-extends Node2D
+extends TileMap
 
+class_name Map
 
-var timer : float = 1
+const PLAYER = preload("res://Scenes/Player.tscn")
 
-func _process(delta):
+var peer = ENetMultiplayerPeer.new()
+var pressed = false
+var n_players : int = 0
+var players : Array[Player] = []
 
-	timer -=delta
+func _ready() -> void:
+	pass # Replace with function body.
 	
-	if timer <= 0:
-		zombie_spawn()
-		timer = 10
+func add_player(id):
+	var player_character = PLAYER.instantiate()
+	add_child(player_character)
+	player_character.name = str(id)
+	player_character.global_position = $PlayerSpawner.global_position
+	player_character.global_position.x += n_players*2
+	n_players += 1
+	players.append(player_character)
+func send_message():
+	pass
 
-@onready var character_body_2d: CharacterBody2D = get_node("%Player")
-
-@onready var tile_map: TileMap = $TileMap
-
-const ZOMBIE = preload("res://Scenes/Zombie.tscn")
-
-@onready var spawn_coords: Vector2=tile_map.map_to_local(Vector2i(-41,4))
-
-func zombie_spawn():
-	
-	var zombie = ZOMBIE.instantiate()
-	
-	add_child(zombie)
-	
-	zombie.position = spawn_coords
-	
+func _input(event: InputEvent) -> void:
+	if event.is_pressed():
+		if not pressed:
+			if event.is_action("F7"):
+				peer.create_server(3000)
+				multiplayer.multiplayer_peer = peer
+				multiplayer.peer_connected.connect(add_player)
+				add_player(1)
+			elif event.is_action("F8"):
+				peer.create_client("localhost",3000)
+				multiplayer.multiplayer_peer = peer
+			for node in get_children():
+				if node is ZombieSpawner:
+					node.canspawn = true
